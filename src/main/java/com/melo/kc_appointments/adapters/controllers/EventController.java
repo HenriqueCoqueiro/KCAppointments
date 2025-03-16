@@ -7,6 +7,8 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -26,9 +28,23 @@ public class EventController {
         return eventServices.getEvents();
     }
 
-    @GetMapping(value = "/getAvailableTimes")
-    public List<Event> getByBeginningDate(@RequestParam @DateTimeFormat(pattern = "dd-MM-yyyy") LocalDate date){
-        return eventServices.getAvailableTimes(date);
+    @GetMapping(value = "/getScheduledEvents")
+    public List<Event> getScheduledEvents(@RequestParam @DateTimeFormat(pattern = "dd-MM-yyyy") LocalDate date){
+        return eventServices.getScheduledEvents(date);
+    }
+
+    @GetMapping(value = "/getAvailableDateTime")
+    public List<LocalDateTime> getAvailableDateTime(@RequestParam @DateTimeFormat(pattern = "dd-MM-yyyy") LocalDate date){
+        List<Event> events = eventServices.getScheduledEvents(date);
+        List<LocalDateTime> scheduledDateTime = new ArrayList<>();
+        for(int i = 0; i < events.size(); i++){
+            scheduledDateTime.add(events.get(i).getBeginningDate());
+            scheduledDateTime.add(events.get(i).getEndingDate());
+        }
+        System.out.println("PRINT AQUI");
+        System.out.println(scheduledDateTime.get(0));
+        return eventServices.getAvailableDateTime(scheduledDateTime, date);
+
     }
 
 }

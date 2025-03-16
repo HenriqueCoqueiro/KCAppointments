@@ -10,5 +10,7 @@ import java.util.List;
 
 public interface EventRepo extends JpaRepository<Event, Long> {
     @Query(value = "SELECT * FROM event WHERE DATE (beginning_date) = :date",nativeQuery = true)
-    public List<Event> getAvailableTimes(@Param("date") LocalDate date);
+    public List<Event> getScheduledEvents(@Param("date") LocalDate date);
+
+
 }

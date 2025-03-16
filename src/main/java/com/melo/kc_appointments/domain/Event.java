@@ -21,6 +21,7 @@ public class Event {
     private LocalDateTime beginningDate;
     @Column
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy HH:mm")
+
     private LocalDateTime endingDate;
 
     public Long getId() {

@@ -8,6 +8,7 @@ public class KcAppointmentsApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(KcAppointmentsApplication.class, args);
+		System.out.println("Fuso horário do sistema: " + java.time.ZoneId.systemDefault());
 	}
 
 }
