@@ -39,13 +39,34 @@ public class EventServices {
             dateTime.add(dateBase.plusMinutes(h*30));
         }
 
+        int counter = 0;
+        int counterEndBeg = 0;
+        List<LocalDateTime> toRemove = new ArrayList<>();
         for (int i = 0; dateTime.size() > i; i++){
-            for (LocalDateTime scheduledDate : scheduledDateTime) {
-                if (dateTime.get(i).equals(scheduledDate)) {
-                    dateTime.remove(i);
+            for (int j = 0; j < scheduledDateTime.size(); j++) { //resolver caso de um dia pro outro
+                if (dateTime.get(i).equals(scheduledDateTime.get(j))) {
+                    toRemove.add(dateTime.get(i));
+                    counterEndBeg++;
+                    if (counterEndBeg == 2){
+                        int temp = counter;
+                        int a = i;
+                        for (int z = 0; z < temp; z++){
+                            toRemove.add(dateTime.get(a));
+                            a--;
+                            counter--;
+                            System.out.println(counter);
+                        }
+                        counter = 0;
+                        counterEndBeg = 0;
+                    }
                 }
             }
+            if (counterEndBeg > 0) {
+                counter++;
+            }
         }
+
+        dateTime.removeAll(toRemove);
         return dateTime;
     }
 
