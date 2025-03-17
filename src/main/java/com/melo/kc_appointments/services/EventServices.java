@@ -9,6 +9,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -34,8 +35,9 @@ public class EventServices {
         LocalDateTime dateBase = LocalDateTime.of(date, LocalTime.of(0,0,0));
 
         List<LocalDateTime> dateTime = new ArrayList<>();
+        Collections.sort(scheduledDateTime);
 
-        for (int h = 0; 24*2 > h; h++){
+        for (int h = 0; 24*2 >= h; h++){
             dateTime.add(dateBase.plusMinutes(h*30));
         }
 
@@ -44,7 +46,14 @@ public class EventServices {
         List<LocalDateTime> toRemove = new ArrayList<>();
         for (int i = 0; dateTime.size() > i; i++){
             for (int j = 0; j < scheduledDateTime.size(); j++) { //resolver caso de um dia pro outro
-                if (dateTime.get(i).equals(scheduledDateTime.get(j))) {
+                if (dateTime.get(i).equals(scheduledDateTime.get(j)) && j == 1){
+                    int temp = i;
+                    for (int z = 0; z <= i; z ++){
+                        toRemove.add(dateTime.get(temp));
+                        temp--;
+                    }
+                }
+                else if (dateTime.get(i).equals(scheduledDateTime.get(j))) {
                     toRemove.add(dateTime.get(i));
                     counterEndBeg++;
                     if (counterEndBeg == 2){
@@ -54,7 +63,6 @@ public class EventServices {
                             toRemove.add(dateTime.get(a));
                             a--;
                             counter--;
-                            System.out.println(counter);
                         }
                         counter = 0;
                         counterEndBeg = 0;

@@ -41,8 +41,6 @@ public class EventController {
             scheduledDateTime.add(events.get(i).getBeginningDate());
             scheduledDateTime.add(events.get(i).getEndingDate());
         }
-        System.out.println("PRINT AQUI");
-        System.out.println(scheduledDateTime.get(0));
         return eventServices.getAvailableDateTime(scheduledDateTime, date);
 
     }
