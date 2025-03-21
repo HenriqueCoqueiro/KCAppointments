@@ -23,18 +23,29 @@ public class EventController {
         return "ADDED!";
     }
 
-    @GetMapping(value = "/getEvents")
-    public List<Event> getEvents(){
-        return eventServices.getEvents();
+    @DeleteMapping(value = "/deleteEvent")
+    public String deleteEvent(@RequestParam String name){
+        eventServices.deleteEvent(name);
+        return "DELETED!";
+    }
+
+    @GetMapping(value = "/getEvent")
+    public Event getEvent(@RequestParam String name){
+        return eventServices.getEvent(name);
+    }
+
+    @GetMapping(value = "/getAllEvents")
+    public List<Event> getAllEvents(){
+        return eventServices.getAllEvents();
     }
 
     @GetMapping(value = "/getScheduledEvents")
-    public List<Event> getScheduledEvents(@RequestParam @DateTimeFormat(pattern = "dd-MM-yyyy") LocalDate date){
+    public List<Event> getScheduledEvents(@RequestParam @DateTimeFormat(pattern = "dd/MM/yyyy") LocalDate date){
         return eventServices.getScheduledEvents(date);
     }
 
     @GetMapping(value = "/getAvailableDateTime")
-    public List<LocalDateTime> getAvailableDateTime(@RequestParam @DateTimeFormat(pattern = "dd-MM-yyyy") LocalDate date){
+    public List<LocalDateTime> getAvailableDateTime(@RequestParam @DateTimeFormat(pattern = "dd/MM/yyyy") LocalDate date){
         List<Event> events = eventServices.getScheduledEvents(date);
         List<LocalDateTime> scheduledDateTime = new ArrayList<>();
         for(int i = 0; i < events.size(); i++){

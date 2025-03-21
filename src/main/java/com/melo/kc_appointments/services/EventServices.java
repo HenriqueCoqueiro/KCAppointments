@@ -22,7 +22,16 @@ public class EventServices {
         eventRepo.save(event);
     }
 
-    public List<Event> getEvents(){
+    public void deleteEvent(String name){
+        Event deletedEvent = eventRepo.findEventByname(name);
+        eventRepo.delete(deletedEvent);
+    }
+
+    public Event getEvent(String name){
+       return eventRepo.findEventByname(name);
+    }
+
+    public List<Event> getAllEvents(){
         return eventRepo.findAll();
     }
 
@@ -45,7 +54,7 @@ public class EventServices {
         int counterEndBeg = 0;
         List<LocalDateTime> toRemove = new ArrayList<>();
         for (int i = 0; dateTime.size() > i; i++){
-            for (int j = 0; j < scheduledDateTime.size(); j++) { //resolver caso de um dia pro outro
+            for (int j = 0; j < scheduledDateTime.size(); j++) {
                 if (dateTime.get(i).equals(scheduledDateTime.get(j)) && j == 1){
                     int temp = i;
                     for (int z = 0; z <= i; z ++){

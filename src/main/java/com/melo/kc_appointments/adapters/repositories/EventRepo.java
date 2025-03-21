@@ -9,6 +9,8 @@ import java.time.LocalDate;
 import java.util.List;
 
 public interface EventRepo extends JpaRepository<Event, Long> {
+
+    public Event findEventByname(String name);
     @Query(value = "SELECT * FROM event WHERE DATE (beginning_date) = :date OR DATE (ending_date) = :date",nativeQuery = true)
     public List<Event> getScheduledEvents(@Param("date") LocalDate date);
 
