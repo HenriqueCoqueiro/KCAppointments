@@ -1,6 +1,7 @@
 package com.melo.kc_appointments.domain;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.melo.kc_appointments.exceptions.InvalidDateTimeException;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
@@ -21,9 +22,16 @@ public class Event {
     private LocalDateTime beginningDate;
     @Column
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy HH:mm")
-
     private LocalDateTime endingDate;
 
+
+    @PrePersist
+    @PreUpdate
+    public  void validateDate(){
+        if (endingDate.isBefore(beginningDate)){
+            throw new InvalidDateTimeException("ending cant be before the begin");
+        }
+    }
     public Long getId() {
         return id;
     }

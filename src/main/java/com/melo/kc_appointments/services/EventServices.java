@@ -55,6 +55,7 @@ public class EventServices {
         List<LocalDateTime> toRemove = new ArrayList<>();
         for (int i = 0; dateTime.size() > i; i++){
             for (int j = 0; j < scheduledDateTime.size(); j++) {
+                //IN CASE THE SECOND (1) HAS A YESTERDAY BEGINNING DATE TIME, WE HAVE TO FORCE IT
                 if (dateTime.get(i).equals(scheduledDateTime.get(j)) && j == 1){
                     int temp = i;
                     for (int z = 0; z <= i; z ++){
