@@ -2,9 +2,11 @@ package com.melo.kc_appointments.services;
 
 import com.melo.kc_appointments.adapters.repositories.EventRepo;
 import com.melo.kc_appointments.domain.Event;
+import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;

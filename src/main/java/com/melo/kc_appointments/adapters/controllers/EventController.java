@@ -2,6 +2,7 @@ package com.melo.kc_appointments.adapters.controllers;
 
 import com.melo.kc_appointments.domain.Event;
 import com.melo.kc_appointments.services.EventServices;
+import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
@@ -16,6 +17,7 @@ public class EventController {
 
     @Autowired
     public EventServices eventServices;
+
 
     @PostMapping(value = "/addEvent")
     public String addEvent(@RequestBody Event event){
@@ -38,6 +40,7 @@ public class EventController {
     public List<Event> getAllEvents(){
         return eventServices.getAllEvents();
     }
+
 
     @GetMapping(value = "/getScheduledEvents")
     public List<Event> getScheduledEvents(@RequestParam @DateTimeFormat(pattern = "dd/MM/yyyy") LocalDate date){

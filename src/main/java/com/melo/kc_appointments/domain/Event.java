@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.melo.kc_appointments.exceptions.InvalidDateTimeException;
 import jakarta.persistence.*;
 
+import java.time.Duration;
 import java.time.LocalDateTime;
 
 
@@ -16,6 +17,8 @@ public class Event {
     @Column
     private String name;
     @Column
+    private Double price;
+    @Column
     private String description;
     @Column
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy HH:mm")
@@ -25,13 +28,23 @@ public class Event {
     private LocalDateTime endingDate;
 
 
+
     @PrePersist
     @PreUpdate
-    public  void validateDate(){
+    public  void init(){
         if (endingDate.isBefore(beginningDate)){
             throw new InvalidDateTimeException("ending cant be before the begin");
         }
+
+        //price calc
+        Duration duration = Duration.between(beginningDate, endingDate);
+        System.out.println(duration.toMinutes());
+        int gap = (int) duration.toMinutes()/30;
+        System.out.println(gap);
+        price = (double) gap * 150;
+        System.out.println(price);
     }
+    
     public Long getId() {
         return id;
     }
@@ -46,6 +59,14 @@ public class Event {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Double getPrice() {
+        return price;
+    }
+
+    public void setPrice(Double price) {
+        this.price = price;
     }
 
     public String getDescription() {
