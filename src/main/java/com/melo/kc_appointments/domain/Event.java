@@ -1,6 +1,8 @@
 package com.melo.kc_appointments.domain;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.melo.kc_appointments.exceptions.InvalidDateTimeException;
 import jakarta.persistence.*;
 
@@ -17,6 +19,7 @@ public class Event {
     @Column
     private String name;
     @Column
+    @JsonIgnore
     private Double price;
     @Column
     private String description;
@@ -36,7 +39,7 @@ public class Event {
             throw new InvalidDateTimeException("ending cant be before the begin");
         }
 
-        //price calc
+        //price calc, it´s gonna change based on client´s choices
         Duration duration = Duration.between(beginningDate, endingDate);
         System.out.println(duration.toMinutes());
         int gap = (int) duration.toMinutes()/30;
@@ -61,12 +64,9 @@ public class Event {
         this.name = name;
     }
 
+    @JsonProperty
     public Double getPrice() {
         return price;
-    }
-
-    public void setPrice(Double price) {
-        this.price = price;
     }
 
     public String getDescription() {

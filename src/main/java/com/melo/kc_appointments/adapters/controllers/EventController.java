@@ -2,8 +2,8 @@ package com.melo.kc_appointments.adapters.controllers;
 
 import com.melo.kc_appointments.domain.Event;
 import com.melo.kc_appointments.services.EventServices;
-import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,6 +25,17 @@ public class EventController {
         return "ADDED!";
     }
 
+    @PutMapping(value = "/updateEvent{id}")
+    public String updateEvent(@PathVariable long id, @RequestBody Event event){
+        Event updateEvent = eventServices.findById(id);
+        updateEvent.setName(event.getName());
+        updateEvent.setDescription(event.getDescription());
+        updateEvent.setBeginningDate(event.getBeginningDate());
+        updateEvent.setEndingDate(event.getEndingDate());
+
+        return "UPDATED!";
+    }
+
     @DeleteMapping(value = "/deleteEvent")
     public String deleteEvent(@RequestParam String name){
         eventServices.deleteEvent(name);
@@ -33,7 +44,7 @@ public class EventController {
 
     @GetMapping(value = "/getEvent")
     public Event getEvent(@RequestParam String name){
-        return eventServices.getEvent(name);
+        return eventServices.findByName(name);
     }
 
     @GetMapping(value = "/getAllEvents")

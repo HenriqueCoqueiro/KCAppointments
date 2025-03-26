@@ -29,7 +29,11 @@ public class EventServices {
         eventRepo.delete(deletedEvent);
     }
 
-    public Event getEvent(String name){
+    public Event findById(Long id){
+        return eventRepo.findById(id).get();
+    }
+
+    public Event findByName(String name){
        return eventRepo.findEventByname(name);
     }
 
